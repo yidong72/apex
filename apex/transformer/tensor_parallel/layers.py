@@ -336,7 +336,7 @@ class LinearWithGradAccumulationAndAsyncCommunication(torch.autograd.Function):
             total_input = all_gather_buffer
         else:
             total_input = input
-        grad_input = grad_output.matmul(weight)
+        grad_input = grad_output.matmul(weight).to(dtype=weight.dtype)
 
         if ctx.sequence_parallel_enabled:
             handle.wait()
